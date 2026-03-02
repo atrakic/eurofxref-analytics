@@ -21,4 +21,5 @@ models:
         description: Exchange rate against EUR. Null when no rate was published for a given date/currency.
         tests:
           - not_null:
-              severity: warn
+              config:
+                severity: warn

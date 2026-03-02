@@ -17,4 +17,5 @@ models:
         description: Latest exchange rate against EUR.
         tests:
           - not_null:
-              severity: warn
+              config:
+                severity: warn
