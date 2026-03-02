@@ -7,7 +7,7 @@
 DuckDB, and transforms them with dbt.
 
 
-## TLDR
+## TLD;R
 
 ```
 duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_extensions=1; CREATE TABLE eurofxref_hist AS SELECT * FROM read_csv_auto(\"https://csvbase.com/calpaterson/eurofxref-hist\"); select * from eurofxref_hist;"
@@ -26,10 +26,26 @@ duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_exte
 ## Pipeline
 
 ```
-CSV (eurofxref-hist)
+1. CSV (eurofxref-hist)
+        |
+        \/
+2. Extract (Python, uv)
   -> extract.py          # fetch and load into raw.fx_rates (DuckDB)
-  -> stg_fx_rates        # dbt view: cast types, normalise columns
-  -> mart_fx_latest      # dbt table: most recent rate per currency
+        |
+        \/
+3. Load -> DuckDB (raw schema)
+        |
+        \/
+4. Transform (dbt models)
+        |
+        \/
+5. Analytics layers
+  -> stg_fx_rates          # dbt view:  cast types, normalise columns
+  -> int_fx_rates_cleaned  # dbt view:  filter nulls, add eur_per_unit
+  -> mart_fx_latest        # dbt table: most recent rate per currency
+        |
+        \/
+6. CI via GitHub Actions
 ```
 
 ## Development
@@ -53,8 +69,8 @@ uv run dbt test --project-dir dbt --profiles-dir dbt
 uv run pytest
 ```
 
-
-### With Devbox
+### Devbox
+> https://www.jetify.com/docs/devbox
 
 ```bash
 devbox shell          # installs uv and syncs dependencies automatically
@@ -68,8 +84,9 @@ devbox run dbt-docs   # generate dbt documentation
 ```
 extract.py          # ETL script
 dbt/                # dbt project config and profiles
-models/
+dbt/models/
   staging/          # stg_fx_rates: raw data cleaned and typed
+  intermediate/     # int_fx_rates_cleaned: filter nulls, add eur_per_unit
   marts/            # mart_fx_latest: latest exchange rates
 tests/              # pytest tests for the extract module
 ```
