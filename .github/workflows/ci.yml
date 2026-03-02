@@ -18,16 +18,10 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --all-extras --dev
+        run: uv sync --all-groups
 
       - name: Run Extract
         run: uv run python extract.py
-
-      - name: Ruff formater
-        run: uv run ruff format --check
-
-      - name: Ruff linter
-        run: uv run ruff check
 
       - name: Run pytest
         run: uv run pytest

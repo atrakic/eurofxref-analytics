@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.7/.schema/devbox.schema.json",
+  "packages": [
+    "uv@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "uv sync --all-groups"
+    ],
+    "scripts": {
+      "extract": "uv run python extract.py",
+      "test": "uv run pytest",
+      "dbt-run": "uv run dbt run --project-dir dbt --profiles-dir dbt",
+      "dbt-test": "uv run dbt test --project-dir dbt --profiles-dir dbt",
+      "dbt-docs": "uv run dbt docs generate --project-dir dbt --profiles-dir dbt",
+      "pipeline": "uv run python extract.py && uv run dbt run --project-dir dbt --profiles-dir dbt && uv run dbt test --project-dir dbt --profiles-dir dbt"
+    }
+  }
+}

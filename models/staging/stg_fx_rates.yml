@@ -2,7 +2,23 @@ version: 2
 
 models:
   - name: stg_fx_rates
+    description: Staged Euro FX reference rates. One row per date/currency combination.
     columns:
       - name: fx_date
+        description: Date of the exchange rate.
         tests:
           - not_null
+      - name: csvbase_row_id
+        description: Source row identifier from csvbase.
+        tests:
+          - not_null
+          - unique
+      - name: variable
+        description: ISO 4217 currency code (e.g. USD, GBP, JPY).
+        tests:
+          - not_null
+      - name: value
+        description: Exchange rate against EUR. Null when no rate was published for a given date/currency.
+        tests:
+          - not_null:
+              severity: warn
