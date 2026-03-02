@@ -4,11 +4,14 @@ config-version: 2
 
 profile: fx_analytics
 
-model-paths: ["../models"]
+model-paths: ["models"]
+test-paths: ["tests"]
 
 models:
   fx_analytics:
     staging:
+      materialized: view
+    intermediate:
       materialized: view
     marts:
       materialized: table

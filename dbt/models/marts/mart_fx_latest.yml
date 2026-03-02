@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: mart_fx_latest
+    description: Most recent Euro FX rate for each currency. One row per currency.
+    columns:
+      - name: currency
+        description: ISO 4217 currency code.
+        tests:
+          - not_null
+          - unique
+      - name: rate
+        description: Units of currency per 1 EUR at the latest date.
+        tests:
+          - not_null
+      - name: eur_per_unit
+        description: EUR value of one unit of the currency.
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: latest_date
+        description: Date of the latest available rate.
+        tests:
+          - not_null
