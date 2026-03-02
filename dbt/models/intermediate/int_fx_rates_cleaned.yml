@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: int_fx_rates_cleaned
+    description: >
+      Cleaned and enriched FX rates. Filters out null or non-positive values,
+      normalises the currency code, and adds eur_per_unit.
+    columns:
+      - name: fx_date
+        description: Date of the exchange rate.
+        tests:
+          - not_null
+      - name: currency
+        description: ISO 4217 currency code, upper-cased.
+        tests:
+          - not_null
+      - name: rate
+        description: Units of currency per 1 EUR (must be > 0).
+        tests:
+          - not_null
+      - name: eur_per_unit
+        description: EUR value of one unit of the currency (1 / rate).
+        tests:
+          - not_null
