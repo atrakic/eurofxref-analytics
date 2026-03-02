@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: stg_fx_rates
+    columns:
+      - name: fx_date
+        tests:
+          - not_null

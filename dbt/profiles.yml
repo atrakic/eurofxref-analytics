@@ -1,0 +1,6 @@
+fx_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../duckdb.db
