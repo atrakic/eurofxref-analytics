@@ -1,5 +1,7 @@
 # eurofxref-analytics
 
+> Yet another lightweight, ETL analytics project using dbt & duckdb.
+
 ## Flow
 ```
 1. CSV (eurofxref-hist)
