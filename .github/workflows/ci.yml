@@ -1,9 +1,31 @@
 name: CI
 
-on: [push]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:   # manually trigger from the Actions tab in GitHub UI
 
 jobs:
-  noop:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "Hello world"
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run Extract
+        run: uv run python extract.py
+
+      - name: Run pytest
+        run: uv run pytest
+
+      - name: Run dbt
+        run: uv run dbt run --project-dir dbt --profiles-dir dbt
+
+      - name: Run dbt tests
+        run: uv run dbt test --project-dir dbt --profiles-dir dbt

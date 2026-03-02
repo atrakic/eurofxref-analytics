@@ -3,4 +3,4 @@ fx_analytics:
   outputs:
     dev:
       type: duckdb
-      path: ../duckdb.db
+      path: duckdb.db
