@@ -7,6 +7,11 @@
 DuckDB, and transforms them with dbt.
 
 
+## TLDR
+
+```
+duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_extensions=1; CREATE TABLE eurofxref_hist AS SELECT * FROM read_csv_auto(\"https://csvbase.com/calpaterson/eurofxref-hist\"); select * from eurofxref_hist;"
+```
 
 ## Stack
 
@@ -15,6 +20,7 @@ DuckDB, and transforms them with dbt.
 | Package management | [uv](https://docs.astral.sh/uv/) |
 | Storage | [DuckDB](https://duckdb.org/) |
 | Transformation | [dbt-duckdb](https://github.com/duckdb/dbt-duckdb) |
+| Dev environment | [Devbox](https://www.jetify.com/devbox) |
 | CI | GitHub Actions |
 
 ## Pipeline
@@ -26,11 +32,13 @@ CSV (eurofxref-hist)
   -> mart_fx_latest      # dbt table: most recent rate per currency
 ```
 
-## Usage
+## Development
+
+### uv
 
 ```bash
 # Install dependencies
-uv sync
+uv sync --all-groups
 
 # Fetch source data and populate DuckDB
 uv run python extract.py
@@ -43,6 +51,16 @@ uv run dbt test --project-dir dbt --profiles-dir dbt
 
 # Run Python tests
 uv run pytest
+```
+
+
+### With Devbox
+
+```bash
+devbox shell          # installs uv and syncs dependencies automatically
+devbox run pipeline   # extract -> dbt run -> dbt test
+devbox run test       # pytest only
+devbox run dbt-docs   # generate dbt documentation
 ```
 
 ## Project structure
