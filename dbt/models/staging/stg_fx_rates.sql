@@ -1,6 +1,5 @@
-select
-    date::date   as fx_date,
+select date::date as fx_date,
     csvbase_row_id,
-    variable,
-    value
+    currency,
+    rate
 from raw.fx_rates
