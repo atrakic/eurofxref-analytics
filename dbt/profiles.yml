@@ -4,3 +4,7 @@ fx_analytics:
     dev:
       type: duckdb
       path: duckdb.db
+
+    prod:
+      type: duckdb
+      path: "md:eurofxref-analytics"
