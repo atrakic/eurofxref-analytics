@@ -3,14 +3,14 @@
 [![CI](https://github.com/atrakic/eurofxref-analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/atrakic/eurofxref-analytics/actions/workflows/ci.yml)
 
 > Lightweight ELT pipeline that fetches historical Euro foreign exchange rates from
-[eurofxref-hist](https://csvbase.com/calpaterson/eurofxref-hist), loads them into
+[eurofxref-hist](https://csvbase.com/table-munger/eurofxref-hist), loads them into
 DuckDB, and transforms them with dbt.
 
 
 ## TLD;R
 
 ```
-duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_extensions=1; CREATE TABLE eurofxref_hist AS SELECT * FROM read_csv_auto(\"https://csvbase.com/calpaterson/eurofxref-hist\"); select * from eurofxref_hist;"
+duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_extensions=1; CREATE TABLE eurofxref_hist AS SELECT * FROM read_csv_auto(\"https://csvbase.com/table-munger/eurofxref-hist"); select * from eurofxref_hist;"
 ```
 
 ## Stack
