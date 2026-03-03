@@ -2,8 +2,8 @@
 -- Returns rows that violate the constraint (non-zero result = test failure).
 select
     fx_date,
-    variable,
-    value
+    currency,
+    rate
 from {{ ref('stg_fx_rates') }}
-where value is not null
-    and value <= 0
+where rate is not null
+    and rate <= 0

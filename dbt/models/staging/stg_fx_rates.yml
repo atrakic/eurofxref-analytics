@@ -13,12 +13,12 @@ models:
         tests:
           - not_null
           - unique
-      - name: variable
+      - name: currency
         description: ISO 4217 currency code (e.g. USD, GBP, JPY).
         tests:
           - not_null
-      - name: value
-        description: Exchange rate against EUR. Null when no rate was published for a given date/currency.
+      - name: rate
+        description: Exchange rate (1 EUR = N units). Null when no rate was published for a given date/currency.
         tests:
           - not_null:
               config:
