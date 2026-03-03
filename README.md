@@ -78,6 +78,14 @@ devbox run test       # pytest only
 devbox run dbt-docs   # generate dbt documentation
 ```
 
+### Notebook
+
+```bash
+uv run jupyter notebook notebooks/
+```
+
+Open `Untitled-1.ipynb`. Run cell 1 to fetch data and populate the database, then run the remaining cells to explore and visualise the rates.
+
 ## Project structure
 
 ```
