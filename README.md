@@ -17,7 +17,6 @@ duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_exte
 
 | Layer | Tool |
 |---|---|
-| Package management | [uv](https://docs.astral.sh/uv/) |
 | Storage | [DuckDB](https://duckdb.org/) |
 | Transformation | [dbt-duckdb](https://github.com/duckdb/dbt-duckdb) |
 | Dev environment | [Devbox](https://www.jetify.com/devbox) |

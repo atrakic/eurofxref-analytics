@@ -1,9 +1,11 @@
+import os
 import duckdb
 import pandas as pd
 import requests
 from io import StringIO
 
-URL = "https://csvbase.com/calpaterson/eurofxref-hist"
+URL = os.environ.get("FX_URL", "https://csvbase.com/table-munger/eurofxref-hist")
+DB_PATH = os.environ.get("DUCKDB_PATH", "duckdb.db")
 
 
 def fetch_fx_data(url: str = URL) -> pd.DataFrame:
@@ -14,7 +16,7 @@ def fetch_fx_data(url: str = URL) -> pd.DataFrame:
     return df
 
 
-def load_to_duckdb(df: pd.DataFrame, db_path: str = "duckdb.db") -> None:
+def load_to_duckdb(df: pd.DataFrame, db_path: str = DB_PATH) -> None:
     con = duckdb.connect(db_path)
     con.execute("CREATE SCHEMA IF NOT EXISTS raw")
     con.execute("DROP TABLE IF EXISTS raw.fx_rates")
