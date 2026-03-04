@@ -5,7 +5,7 @@
 
 > Lightweight ELT pipeline that fetches historical Euro foreign exchange rates from
 [eurofxref-hist](https://csvbase.com/table-munger/eurofxref-hist), loads them into
-DuckDB, and transforms them with dbt.
+DuckDB warehouse, and transforms them with dbt. Uses evidence.dev for data driven dashboard.
 
 ## Table of Contents
 
