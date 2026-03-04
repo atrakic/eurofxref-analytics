@@ -1,0 +1,4 @@
+name: eurofxref
+type: duckdb
+options:
+  filename: ../../duckdb.db
