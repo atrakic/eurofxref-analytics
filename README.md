@@ -7,6 +7,21 @@
 [eurofxref-hist](https://csvbase.com/table-munger/eurofxref-hist), loads them into
 DuckDB, and transforms them with dbt.
 
+## Table of Contents
+
+- [TL;DR](#tldr)
+- [Stack](#stack)
+- [Pipeline](#pipeline)
+- [Development](#development)
+  - [uv](#uv)
+  - [Devbox](#devbox)
+  - [Notebook](#notebook)
+- [Project structure](#project-structure)
+- [Dashboard](#dashboard)
+  - [How it works](#how-it-works)
+  - [GitHub Pages configuration](#github-pages-configuration)
+  - [Performance](#performance)
+
 
 ## TL;DR
 
