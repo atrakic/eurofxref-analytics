@@ -2,6 +2,7 @@ name: Deploy to GitHub Pages
 # https://docs.evidence.dev/deployment/self-host/github-pages/ 
 
 on:
+  workflow_dispatch:
   push:
     branches: 'main' # or whichever branch you want to deploy from
 
