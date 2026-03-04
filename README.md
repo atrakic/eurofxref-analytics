@@ -7,7 +7,7 @@
 DuckDB, and transforms them with dbt.
 
 
-## TLD;R
+## TL;DR
 
 ```
 duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_extensions=1; CREATE TABLE eurofxref_hist AS SELECT * FROM read_csv_auto(\"https://csvbase.com/table-munger/eurofxref-hist"); select * from eurofxref_hist;"
