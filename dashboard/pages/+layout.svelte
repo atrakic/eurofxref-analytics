@@ -8,6 +8,7 @@
 <EvidenceDefaultLayout
 	{data}
 	githubRepo="https://github.com/atrakic/eurofxref-analytics"
+  title="eurofxref-analytics"
 >
 	<slot slot="content" />
 </EvidenceDefaultLayout>
