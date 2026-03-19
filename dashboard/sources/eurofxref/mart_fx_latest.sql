@@ -1,1 +1,2 @@
-select * from mart_fx_latest
+select *
+from mart_fx_latest
