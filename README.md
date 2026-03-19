@@ -191,12 +191,11 @@ npm run test:e2e
 npm run test:e2e:ui
 ```
 
-The Evidence dev server must be able to reach `duckdb.db` in the `dashboard/` directory. Run the full pipeline first if the database does not exist:
+Run the full pipeline first if the database does not exist:
 
 ```bash
 uv run python extract.py
 uv run dbt run --project-dir dbt --profiles-dir dbt
-cp -f duckdb.db dashboard/
 ```
 
 Playwright tests run automatically in CI as part of the `gh-pages` workflow before the static site is built. The HTML report is uploaded as a build artifact on failure.
