@@ -1,4 +1,4 @@
 name: eurofxref
 type: duckdb
 options:
-  filename: ../../duckdb.db
+  filename: ../../../duckdb.db
