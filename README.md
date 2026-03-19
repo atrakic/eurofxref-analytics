@@ -21,6 +21,7 @@ DuckDB warehouse, and transforms them with dbt. Uses evidence.dev for data drive
   - [How it works](#how-it-works)
   - [GitHub Pages configuration](#github-pages-configuration)
   - [Performance](#performance)
+- [Testing](#testing)
 
 
 ## TL;DR
@@ -31,13 +32,13 @@ duckdb :memory:  -c "SET autoinstall_known_extensions=1; SET autoload_known_exte
 
 ## Stack
 
-| Layer | Tool |
-|---|---|
-| Storage | [DuckDB](https://duckdb.org/) |
-| Transformation | [dbt-duckdb](https://github.com/duckdb/dbt-duckdb) |
-| Dashboard | [Evidence](https://evidence.dev/) |
-| Dev environment | [Devbox](https://www.jetify.com/devbox) |
-| CI | GitHub Actions |
+| Layer           | Tool                                               |
+| --------------- | -------------------------------------------------- |
+| Storage         | [DuckDB](https://duckdb.org/)                      |
+| Transformation  | [dbt-duckdb](https://github.com/duckdb/dbt-duckdb) |
+| Dashboard       | [Evidence](https://evidence.dev/)                  |
+| Dev environment | [Devbox](https://www.jetify.com/devbox)            |
+| CI              | GitHub Actions                                     |
 
 ## Pipeline
 
@@ -146,11 +147,11 @@ The GitHub Actions workflow:
 GitHub Pages serves the site at a subpath (`/eurofxref-analytics/`), which requires
 three things to be wired up correctly:
 
-| File | Setting | Why |
-|---|---|---|
-| `dashboard/evidence.config.yaml` | `deployment.basePath: /eurofxref-analytics` | Tells Evidence to prefix all internal links and asset paths |
-| `dashboard/package.json` | `"build": "EVIDENCE_BUILD_DIR=./build/eurofxref-analytics evidence build"` | Writes the static output into a subdirectory that matches the subpath |
-| `.github/workflows/gh-pages.yml` | `path: dashboard/build/${{ github.event.repository.name }}` | Uploads the correct subdirectory as the Pages artifact |
+| File                             | Setting                                                                    | Why                                                                   |
+| -------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `dashboard/evidence.config.yaml` | `deployment.basePath: /eurofxref-analytics`                                | Tells Evidence to prefix all internal links and asset paths           |
+| `dashboard/package.json`         | `"build": "EVIDENCE_BUILD_DIR=./build/eurofxref-analytics evidence build"` | Writes the static output into a subdirectory that matches the subpath |
+| `.github/workflows/gh-pages.yml` | `path: dashboard/build/${{ github.event.repository.name }}`                | Uploads the correct subdirectory as the Pages artifact                |
 
 Without all three aligned, assets are served from the wrong paths and the page
 renders blank.
@@ -158,6 +159,47 @@ renders blank.
 ### Performance
 
 Evidence bundles source query results as static JSON at build time.
+
+## Testing
+
+### Python tests
+
+```bash
+uv run pytest
+```
+
+### dbt tests
+
+```bash
+uv run dbt test --project-dir dbt --profiles-dir dbt
+```
+
+### Playwright E2E tests
+
+The E2E tests use Playwright with Chromium. They verify KPI cards, charts, and the data table are rendered correctly on the dashboard.
+
+```bash
+# Install dependencies (first time only)
+cd dashboard
+npm install
+npx playwright install chromium
+
+# Run the tests (starts the Evidence dev server automatically)
+npm run test:e2e
+
+# Run with the interactive UI
+npm run test:e2e:ui
+```
+
+The Evidence dev server must be able to reach `duckdb.db` in the `dashboard/` directory. Run the full pipeline first if the database does not exist:
+
+```bash
+uv run python extract.py
+uv run dbt run --project-dir dbt --profiles-dir dbt
+cp -f duckdb.db dashboard/
+```
+
+Playwright tests run automatically in CI as part of the `gh-pages` workflow before the static site is built. The HTML report is uploaded as a build artifact on failure.
 Querying 30 k raw rows client-side was slow, so two pre-aggregated sources are
 used instead:
 
