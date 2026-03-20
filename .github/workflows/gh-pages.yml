@@ -4,7 +4,7 @@ name: Deploy to GitHub Pages
 on:
   workflow_dispatch:
   push:
-    branches: 'main' # or whichever branch you want to deploy from
+    branches: 'main'
 
 jobs:
   build:
@@ -41,6 +41,9 @@ jobs:
           cd dashboard
           npm install
 
+      - name: Generate Evidence sources
+        run: cd dashboard && npm run sources
+
       - name: Install Playwright browsers
         run: cd dashboard && npx playwright install --with-deps chromium
 
@@ -63,7 +66,6 @@ jobs:
           ## EVIDENCE_SOURCE__my_source__private_key: ${{ secrets.EVIDENCE_SOURCE__MY_SOURCE__PRIVATE_KEY }}
         run: |
           cd dashboard
-          npm run sources
           npm run build
 
       - name: Upload Artifacts
